@@ -1,13 +1,14 @@
 #pragma once
 #include <opencv2/core.hpp>
+#include <opencv2/opencv.hpp>
 #include <vector>
 #include <Eigen/Dense>
+#include "Object.h"
+#include "Light.h"
 
 class Rasterizer
 {
 public:
-	cv::Mat image;
-
 	std::vector<Eigen::Vector3f> pixel_color;
 	std::vector<float> depth_buffer;
 
@@ -23,15 +24,18 @@ public:
 	int screen_height, screen_width;
 	std::string image_name;
 
-	Rasterizer(int height, int width, std::string title);
+	Rasterizer(int width, int height, std::string title);
 
-	void SetModelMatrix(float scale, float rotate);
-	void SetCameramatrix(Eigen::Vector3f eye_pos, Eigen::Vector3f gaze_dir, Eigen::Vector3f up_vec);
-	void SetFrustum(float n, float f, float l, float r, float b, float t);
+	void SetCameraMatrix(Eigen::Vector3f eye_pos, Eigen::Vector3f gaze_dir, Eigen::Vector3f up_vec);
+	void SetFrustum(float ne, float fa, float le, float ri, float bo, float to);
 	void SetPerspectiveMatrix();
 	void SetOrthonomalMatrix();
 	void SetViewportMatrix();
-	void GenerateViewMatrix();
+	void GenerateViewMatrix(); 
+
+	void ModelTransform(float scale, float rotate, Object* model);
+	void ApplyTransformation(Object* model);
+	void RasterizeImage(Object model, Object model_copy, Light light);
 
 	void GenerateImage();
 };
