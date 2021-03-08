@@ -1,4 +1,5 @@
 # Rasterizer
-This program is about rasterize a simple obj model.
+This is a program about rendering a image of a given obj-format model.
 
-Using Eigen library to do vector computation and opencv to produce output.
+It use Eigen Library as arithmatic tool and Opencv to output the image.
+
